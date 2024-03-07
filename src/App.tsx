@@ -1,24 +1,22 @@
-import React from 'react';
-import './App.css';
+import React, { useState } from "react";
+import PersonLayout from "./PersonLayout";
 
-function App() {
+const App = () => {
+  const [showInfo, setShowInfo] = useState(false);
+  const [buttonText] = useState("Click the button to view personal info");
+
+  const handleButtonClick = () => {
+    setShowInfo(!showInfo);
+
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <div style={{ textAlign: "center", marginTop: "50px" }}>
+        <h2>{buttonText}</h2>
+        <button onClick={handleButtonClick}>View Data</button>
+        {showInfo && <PersonLayout />}
+      </div>
   );
-}
+};
 
 export default App;
