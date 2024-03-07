@@ -11,10 +11,11 @@
 }
 
 .person-info h2 {
-    font-size: 20px;
+    font-size: 25px;
     margin-bottom: 10px;
 }
 
 .person-info p {
     margin: 5px 0;
+    font-size: 20px;
 }
