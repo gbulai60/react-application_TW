@@ -1,16 +1,25 @@
 import React from 'react';
 import { Card } from 'antd';
+import ProductModel from './Product'
 
 const { Meta } = Card;
 
-const ProductCard: React.FC = () => (
+
+interface ProductCardProps {
+  productModel: ProductModel;
+}
+
+const ProductCard: React.FC<ProductCardProps> = ({ productModel }) => (
   <Card
     hoverable
     style={{ width: 240 }}
-    cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
+    cover={<img alt={productModel.name} src={productModel.imageUrl} />}
   >
-    <Meta title="Europe Street beat" description="www.instagram.com" />
-    <text>Hi</text>
+    <Meta title={productModel.name} description={productModel.description} />
+    <div>
+      <p>Price: {productModel.price}</p>
+      <p>Quantity: {productModel  .quantity}</p>
+    </div>
   </Card>
 );
 
