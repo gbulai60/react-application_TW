@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   AppstoreOutlined,
   BarChartOutlined,
@@ -12,6 +12,8 @@ import {
 import type { MenuProps } from 'antd';
 import { Layout, Menu, theme } from 'antd';
 import ProductCard from './ProductCard';
+import Product from './Product';
+
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -30,10 +32,32 @@ const items: MenuProps['items'] = [
   label: `nav ${index + 1}`,
 }));
 
+const initialData:Product[] = [
+  {
+   name: "iPhone",
+   model: "15 Pro",
+   description: "Description",
+   imageUrl:"https://cdn1.it4profit.com/AfrOrF3gWeDA6VOlDG4TzxMv39O7MXnF4CXpKUwGqRM/resize:fill:540/bg:f6f6f6/q:100/plain/s3://catalog-products/230913073944251820/231108150114973426.png@webp",
+   price: 1300,
+   quantity: 10
+  },
+  {
+    name: "iPhone",
+    model: "15 Pro",
+    description: "Description",
+    imageUrl:"https://cdn1.it4profit.com/AfrOrF3gWeDA6VOlDG4TzxMv39O7MXnF4CXpKUwGqRM/resize:fill:540/bg:f6f6f6/q:100/plain/s3://catalog-products/230913073944251820/231108150114973426.png@webp",
+    price: 1300,
+    quantity: 10
+   }
+]; 
+
+
 const App: React.FC = () => {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
+
+  const [cardData, setCardData] = useState<Product[]>(initialData);
 
   return (
     <Layout hasSider>
@@ -54,6 +78,9 @@ const App: React.FC = () => {
               borderRadius: borderRadiusLG,
             }}
           >
+             <div style={{display:'flex',flexDirection:'row',gap:10 }}>{cardData.map((card , index) => (
+        <ProductCard key={index} productModel={card} />
+      ))}</div>
 
 
           </div>

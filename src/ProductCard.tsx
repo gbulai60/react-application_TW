@@ -1,12 +1,12 @@
 import React from 'react';
 import { Card } from 'antd';
-import ProductModel from './Product'
+import Product from './Product'
 
 const { Meta } = Card;
 
 
 interface ProductCardProps {
-  productModel: ProductModel;
+  productModel: Product;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ productModel }) => (
