@@ -17,6 +17,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ productModel }) => (
   >
     <Meta title={productModel.name} description={productModel.description} />
     <div>
+      <p>Model: {productModel.model}</p>
       <p>Price: {productModel.price}</p>
       <p>Quantity: {productModel  .quantity}</p>
     </div>

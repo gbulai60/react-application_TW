@@ -1,27 +1,15 @@
 import React, { useState } from 'react';
-import ModalForm from './ModalForm';
-import {
-  AppstoreOutlined,
-  ShopOutlined,
-  UserOutlined,
-} from '@ant-design/icons';
-import type { MenuProps } from 'antd';
+import ModalForm from '../ModalForm';
+
 import { Button, Layout, Menu, theme } from 'antd';
-import ProductCard from './ProductCard';
-import Product from './Product';
+import ProductCard from '../ProductCard';
+import Product from '../Product';
+import MenuContainer from './MenuContainer';
 
 
 const { Header, Content, Footer, Sider } = Layout;
 
-const items: MenuProps['items'] = [
-  {icon: UserOutlined, label: 'My cabinet'},
-  {icon: AppstoreOutlined, label : 'Products'},
-  {icon: ShopOutlined, label : 'About us'}
-].map((item, index) => ({
-  key: String(index + 1),
-  icon: React.createElement(item.icon),
-  label: item.label,
-}));
+
 
 const initialData:Product[] = [
   {
@@ -87,7 +75,7 @@ console.log(cardData);
         style={{ overflow: 'auto', height: '100vh', position: 'fixed', left: 0, top: 0, bottom: 0 }}
       >
         <div className="demo-logo-vertical" />
-        <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']} items={items} />
+      <MenuContainer/>
       </Sider>
       <Layout style={{ marginLeft: 200 }}>
         <Header style={{ padding: 0, background: colorBgContainer }} >
