@@ -1,16 +1,12 @@
 import React, { useState } from 'react';
+import ModalForm from './ModalForm';
 import {
   AppstoreOutlined,
-  BarChartOutlined,
-  CloudOutlined,
   ShopOutlined,
-  TeamOutlined,
-  UploadOutlined,
   UserOutlined,
-  VideoCameraOutlined,
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
-import { Layout, Menu, theme } from 'antd';
+import { Button, Layout, Menu, theme } from 'antd';
 import ProductCard from './ProductCard';
 import Product from './Product';
 
@@ -18,18 +14,13 @@ import Product from './Product';
 const { Header, Content, Footer, Sider } = Layout;
 
 const items: MenuProps['items'] = [
-  UserOutlined,
-  VideoCameraOutlined,
-  UploadOutlined,
-  BarChartOutlined,
-  CloudOutlined,
-  AppstoreOutlined,
-  TeamOutlined,
-  ShopOutlined,
-].map((icon, index) => ({
+  {icon: UserOutlined, label: 'My cabinet'},
+  {icon: AppstoreOutlined, label : 'Products'},
+  {icon: ShopOutlined, label : 'About us'}
+].map((item, index) => ({
   key: String(index + 1),
-  icon: React.createElement(icon),
-  label: `nav ${index + 1}`,
+  icon: React.createElement(item.icon),
+  label: item.label,
 }));
 
 const initialData:Product[] = [
@@ -57,7 +48,38 @@ const App: React.FC = () => {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
 
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const [cardData, setCardData] = useState<Product[]>(initialData);
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+  const handleCancel = () => {
+    
+    setIsModalVisible(false);
+   
+  };
+
+  const handleFormSubmit = ( CardProduct: Product) => {
+    console.log("Handle submit")
+    console.log(CardProduct)
+    setCardData([...cardData, CardProduct]);
+    console.log("final card data");
+    console.log(cardData);
+
+    setIsModalVisible(false);
+  };
+
+const emptyCard:Product = {
+  name: "",
+  description: "",
+  model: "",
+  quantity: 0,
+  price: 0,
+  imageUrl: ""
+
+}
+
+console.log(cardData);
 
   return (
     <Layout hasSider>
@@ -68,7 +90,13 @@ const App: React.FC = () => {
         <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']} items={items} />
       </Sider>
       <Layout style={{ marginLeft: 200 }}>
-        <Header style={{ padding: 0, background: colorBgContainer }} />
+        <Header style={{ padding: 0, background: colorBgContainer }} >
+        <Button type="primary" onClick={showModal} style={{ marginBottom: 16, marginLeft:16}}>
+            Add product
+          </Button>
+          <ModalForm visible={isModalVisible} onCancel={handleCancel} onSubmit={handleFormSubmit} card = {emptyCard} />
+         
+        </Header>
         <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
           <div
             style={{
