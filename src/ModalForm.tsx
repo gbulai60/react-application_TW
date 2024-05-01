@@ -8,7 +8,7 @@ import {
     Modal,
 
   } from 'antd';
-import CardProduct from './Product';
+import CardProduct from './models/Smartphone';
 
 const formItemLayout = {
     labelCol: {
@@ -42,7 +42,10 @@ const ModalForm: React.FC<ModalFormProps> = ({ visible, onCancel ,onSubmit, card
       imageUrl : values.imageUrl,
       price : values.price,
       description : values.description,
-      quantity : values.quantity
+      quantity : values.quantity,
+      RAM : values.RAM,
+      OS : values.OS,
+      camera : values.camera
     }
     console.log("OnFinishMethod values")
     console.log(values);
@@ -87,6 +90,18 @@ const ModalForm: React.FC<ModalFormProps> = ({ visible, onCancel ,onSubmit, card
 
           <Form.Item label="Quantity" name="quantity" rules={[{ required: true, message: 'Please input product quantity!' }]}>            
            <InputNumber />
+           </Form.Item>
+
+           <Form.Item label="RAM" name="RAM" rules={[{ required: true, message: 'Please input smartphone RAM!' }]}>            
+           <InputNumber />
+           </Form.Item>
+
+           <Form.Item label="Camera" name="camera" rules={[{ required: true, message: 'Please input smartphone camera!' }]}>            
+           <InputNumber />
+           </Form.Item>
+
+           <Form.Item label="OS" name="OS" rules={[{ required: true, message: 'Please input smartphone OS!' }]}>            
+           <Input />
            </Form.Item>
 
           <Form.Item wrapperCol={{ offset: 6, span: 16 }}>
