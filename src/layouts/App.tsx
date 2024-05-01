@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ModalForm from '../ModalForm';
 
-import { Button, Layout, Menu, theme } from 'antd';
+import { Button, Layout, theme } from 'antd';
 import ProductCard from '../ProductCard';
 import Product from '../Product';
 import MenuContainer from './MenuContainer';
