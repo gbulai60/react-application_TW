@@ -1,28 +1,26 @@
 import React from 'react';
 import { Card } from 'antd';
-import Smartphone from '../models/Smartphone';
+import Product from '../models/Product';
 
 const { Meta } = Card;
 
 
 interface ProductCardProps {
-  smartphone: Smartphone;
+  product: Product;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ smartphone }) => (
+const ProductCard: React.FC<ProductCardProps> = ({ product }) => (
   <Card
     hoverable
     style={{ width: 240 }}
-    cover={<img alt={smartphone.name} src={smartphone.imageUrl} />}
+    cover={<img alt={product.name} src={product.imageUrl} />}
   >
-    <Meta title={smartphone.name} description={smartphone.description} />
+    <Meta title={product.name} description={product.description} />
     <div>
-      <p>Model: {smartphone.model}</p>
-      <p>Price: {smartphone.price}</p>
-      <p>Quantity: {smartphone.quantity}</p>
-      <p>RAM: {smartphone.RAM} GB</p>
-      <p>OS: {smartphone.OS}</p>
-      <p>Camera: {smartphone.camera} Mgpx</p>
+      <p>Model: {product.model}</p>
+      <p>Price: {product.price}</p>
+      <p>Stock: {product.quantity}</p>
+    
     </div>
   </Card>
 );
