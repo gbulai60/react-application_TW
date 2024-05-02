@@ -1,24 +1,27 @@
 import React, { useState } from 'react';
 import ModalForm from '../ModalForm';
 
-import { Button, Layout, Menu, theme } from 'antd';
-import ProductCard from '../ProductCard';
-import Product from '../Product';
+import { Button, Layout, theme } from 'antd';
+import ProductCard from '../cards/ProductCard';
 import MenuContainer from './MenuContainer';
+import Smartphone from '../models/Smartphone';
 
 
 const { Header, Content, Footer, Sider } = Layout;
 
 
 
-const initialData:Product[] = [
+const initialData:Smartphone[] = [
   {
    name: "iPhone",
    model: "15 Pro",
    description: "Description",
    imageUrl:"https://cdn1.it4profit.com/AfrOrF3gWeDA6VOlDG4TzxMv39O7MXnF4CXpKUwGqRM/resize:fill:540/bg:f6f6f6/q:100/plain/s3://catalog-products/230913073944251820/231108150114973426.png@webp",
    price: 1300,
-   quantity: 10
+   quantity: 10,
+   RAM:8,
+   OS:"IOS",
+   camera:12
   },
   {
     name: "iPhone",
@@ -26,7 +29,10 @@ const initialData:Product[] = [
     description: "Description",
     imageUrl:"https://cdn1.it4profit.com/AfrOrF3gWeDA6VOlDG4TzxMv39O7MXnF4CXpKUwGqRM/resize:fill:540/bg:f6f6f6/q:100/plain/s3://catalog-products/230913073944251820/231108150114973426.png@webp",
     price: 1300,
-    quantity: 10
+    quantity: 10,
+    RAM:8,
+    OS:"Android",
+    camera:12
    }
 ]; 
 
@@ -37,7 +43,7 @@ const App: React.FC = () => {
   } = theme.useToken();
 
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [cardData, setCardData] = useState<Product[]>(initialData);
+  const [cardData, setCardData] = useState<Smartphone[]>(initialData);
   const showModal = () => {
     setIsModalVisible(true);
   };
@@ -47,7 +53,7 @@ const App: React.FC = () => {
    
   };
 
-  const handleFormSubmit = ( CardProduct: Product) => {
+  const handleFormSubmit = ( CardProduct: Smartphone) => {
     console.log("Handle submit")
     console.log(CardProduct)
     setCardData([...cardData, CardProduct]);
@@ -57,14 +63,16 @@ const App: React.FC = () => {
     setIsModalVisible(false);
   };
 
-const emptyCard:Product = {
+const emptyCard:Smartphone = {
   name: "",
   description: "",
   model: "",
   quantity: 0,
   price: 0,
-  imageUrl: ""
-
+  imageUrl: "",
+  RAM: 0,
+  OS: "",
+  camera: 0
 }
 
 console.log(cardData);
@@ -95,7 +103,7 @@ console.log(cardData);
             }}
           >
              <div style={{display:'flex',flexDirection:'row',gap:10 }}>{cardData.map((card , index) => (
-        <ProductCard key={index} productModel={card} />
+        <ProductCard key={index} smartphone={card} />
       ))}</div>
 
 
