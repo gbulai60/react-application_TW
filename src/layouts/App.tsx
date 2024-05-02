@@ -15,6 +15,7 @@ const App: React.FC = observer(() => {
   } = theme.useToken();
 
   const [isModalVisible, setIsModalVisible] = React.useState(false);
+  const [selectedProduct, setSelectedProduct] = React.useState<Product | null>(null); 
   
   const showModal = () => {
     setIsModalVisible(true);
@@ -22,11 +23,27 @@ const App: React.FC = observer(() => {
   
   const handleCancel = () => {
     setIsModalVisible(false);
+    setSelectedProduct(null); 
   };
 
   const handleFormSubmit = (cardProduct: Product) => {
+    if (selectedProduct) {
+      productStore.removeProduct(selectedProduct); 
+    }
     productStore.addProduct(cardProduct); 
+    setIsModalVisible(false); 
+    setSelectedProduct(null); 
   };
+
+  const handleEdit = (product: Product) => {
+    setSelectedProduct(product); 
+    showModal();
+  };
+
+  const handleDelete = (product: Product) => {
+    productStore.removeProduct(product); 
+  };
+
   const emptyCard:Product = {
     name: "",
     description: "",
@@ -49,7 +66,7 @@ const App: React.FC = observer(() => {
           <Button type="primary" onClick={showModal} style={{ marginBottom: 16, marginLeft: 16 }}>
             Add product
           </Button>
-          <ModalForm visible={isModalVisible} onCancel={handleCancel} onSubmit={handleFormSubmit} card={emptyCard} />
+          <ModalForm visible={isModalVisible} onCancel={handleCancel} onSubmit={handleFormSubmit} card={selectedProduct || emptyCard} />
         </Header>
         <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
           <div
@@ -60,13 +77,17 @@ const App: React.FC = observer(() => {
               borderRadius: borderRadiusLG,
             }}
           >
-           
             {productStore.loading ? (
               <Spin size="large" />
             ) : (
               <div style={{ display: 'flex', flexDirection: 'row', gap: 10 }}>
                 {productStore.products.map((product, index) => (
-                  <ProductCard key={index} product={product} />
+                  <ProductCard 
+                    key={index} 
+                    product={product} 
+                    onEdit={() => handleEdit(product)}
+                    onDelete={() => handleDelete(product)} 
+                  />
                 ))}
               </div>
             )}
