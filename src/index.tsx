@@ -16,6 +16,7 @@ import MainLayout from './layouts/MainLayout';
       path: "/products",
       element: <App/>
     }
+    
   ]);
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
