@@ -1,53 +1,68 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Form, Input } from 'antd';
+import { Button, Checkbox, Form, Input } from 'antd';
+import "../css/login.css";
+import { useNavigate } from 'react-router-dom';
 
 const LoginComponent: React.FC = () => {
-  const [form] = Form.useForm();
-  const [clientReady, setClientReady] = useState<boolean>(false);
-
-  useEffect(() => {
-    setClientReady(true);
-  }, []);
-
+    const navigate = useNavigate();
   const onFinish = (values: any) => {
-    console.log('Finish:', values);
+
+    const { username, password } = values;
+
+    const users = JSON.parse(localStorage.getItem('users') || '[]');
+    const user = users.find((user: any) => user.username === username && user.password === password);
+
+    if (user) {
+        navigate("/products");
+    } else {
+      // Autentificare eșuată
+      alert('Nume de utilizator sau parolă incorecte.');
+    }
   };
 
   return (
-    <Form form={form} name="horizontal_login" layout="inline" onFinish={onFinish}>
-      <Form.Item
-        name="username"
-        rules={[{ required: true, message: 'Please input your username!' }]}
+    <div className="login-container">
+      <Form
+        name="normal_login"
+        className="login-form"
+        initialValues={{ remember: true }}
+        onFinish={onFinish}
       >
-        <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
-      </Form.Item>
-      <Form.Item
-        name="password"
-        rules={[{ required: true, message: 'Please input your password!' }]}
-      >
-        <Input
-          prefix={<LockOutlined className="site-form-item-icon" />}
-          type="password"
-          placeholder="Password"
-        />
-      </Form.Item>
-      <Form.Item shouldUpdate>
-        {() => (
-          <Button
-            type="primary"
-            htmlType="submit"
-            disabled={
-              !clientReady ||
-              !form.isFieldsTouched(true) ||
-              !!form.getFieldsError().filter(({ errors }) => errors.length).length
-            }
-          >
+        <Form.Item
+          name="username"
+          rules={[{ required: true, message: 'Please input your Username!' }]}
+        >
+          <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
+        </Form.Item>
+        <Form.Item
+          name="password"
+          rules={[{ required: true, message: 'Please input your Password!' }]}
+        >
+          <Input
+            prefix={<LockOutlined className="site-form-item-icon" />}
+            type="password"
+            placeholder="Password"
+          />
+        </Form.Item>
+        <Form.Item>
+          <Form.Item name="remember" valuePropName="checked" noStyle>
+            <Checkbox>Remember me</Checkbox>
+          </Form.Item>
+
+          <a className="login-form-forgot" href="">
+            Forgot password
+          </a>
+        </Form.Item>
+
+        <Form.Item>
+          <Button type="primary" htmlType="submit" className="login-form-button">
             Log in
           </Button>
-        )}
-      </Form.Item>
-    </Form>
+          Or <a href="">register now!</a>
+        </Form.Item>
+      </Form>
+    </div>
   );
 };
 
