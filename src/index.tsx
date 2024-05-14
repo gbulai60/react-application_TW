@@ -6,6 +6,7 @@ import {
     RouterProvider,
   } from "react-router-dom";
 import MainLayout from './layouts/MainLayout';
+import LoginComponent from './login/Login';
 
   const router = createBrowserRouter([
     {
@@ -15,6 +16,10 @@ import MainLayout from './layouts/MainLayout';
     {
       path: "/products",
       element: <App/>
+    },
+    {
+      path: "/login",
+      element: <LoginComponent/>
     }
     
   ]);
