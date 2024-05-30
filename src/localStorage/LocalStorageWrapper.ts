@@ -1,7 +1,6 @@
 import { observable, action, makeObservable } from 'mobx';
 import Product from '../models/Product';
 
-
 const setLocalStorageData = (key: string, data: any) => {
   localStorage.setItem(key, JSON.stringify(data));
 };
@@ -13,12 +12,13 @@ const getLocalStorageData = (key: string): any => {
 
 class LocalStorageWrapper {
   data: Product[] | null = null;
+  users: { username: string, password: string }[] | null = null; 
 
   constructor() {
     makeObservable(this, {
       data: observable,
       setData: action,
-      loadDataFromLocalStorage: action
+      loadDataFromLocalStorage: action,
     });
     this.loadDataFromLocalStorage();
   }
@@ -30,6 +30,8 @@ class LocalStorageWrapper {
 
   async loadDataFromLocalStorage() {
     const storedData = getLocalStorageData('products');
+    const storedUsers = getLocalStorageData('users'); 
+
     if (!storedData) {
       const initialData: Product[] = [
         {
@@ -61,6 +63,17 @@ class LocalStorageWrapper {
       this.data = initialData;
     } else {
       this.data = storedData;
+    }
+
+    if (!storedUsers) { 
+      const initialUsers = [
+        { username: 'user1', password: 'password1' },
+        { username: 'user2', password: 'password2' },
+      ];
+      setLocalStorageData('users', initialUsers);
+      this.users = initialUsers;
+    } else {
+      this.users = storedUsers;
     }
   }
 }
